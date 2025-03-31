@@ -243,8 +243,8 @@ class _addEditHoaHongState extends State<Addedithoahong> {
       return false;
     } else if (tongTienController.text.isEmpty ||
         double.parse(helper.removeFormatCurrency(tongTienController.text)) <
-            50000) {
-      helper.showToast("tổng tiền không được rỗng hoặc dưới 50,000đ", false);
+            30000) {
+      helper.showToast("tổng tiền không được rỗng hoặc dưới 30,000đ", false);
       return false;
     } else if (canNangController.text.isEmpty ||
         double.parse(canNangController.text) == 0.0) {

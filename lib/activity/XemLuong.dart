@@ -104,10 +104,8 @@ class _XemLuongState extends State<Xemluong> {
   }
 
   double luongCung() {
-    int ngayCongThucTe = (soNgayNGhiKhongTinhLuong() == 0)
-        ? (soNgayCong() + soNgayCongThem())
-        : soNgayCong();
-    return 5000000 * ngayCongThucTe / helper.getSoNgayTrongThang();
+    int ngayCongThucTe = soNgayCong() - soNgayNGhiTinhLuong();
+    return 5000000 * ngayCongThucTe / 28;
   }
 
   int soNgayCong() {
@@ -140,11 +138,11 @@ class _XemLuongState extends State<Xemluong> {
   }
 
   double tienPhuCap() {
-    return soNgayCong() * 30000;
+    return (soNgayCong() - soNgayNGhiTinhLuong()) * 25000;
   }
 
   double tienTangCa() {
-    return soGioTangCa * 30000;
+    return soGioTangCa * 25000;
   }
 
   double luongDot1() {
