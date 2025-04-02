@@ -132,7 +132,7 @@ class _NavBarState extends State<Navbar> with WidgetsBindingObserver {
           ListTile(
               leading: const Icon(Icons.equalizer),
               title: Text(
-                "Phân tích tài chính",
+                "Phân tích thu nhập",
                 style: TextStyle(
                     fontWeight: selectedIndex == 4
                         ? FontWeight.bold

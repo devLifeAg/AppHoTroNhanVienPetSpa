@@ -29,7 +29,7 @@ class _XemLuongState extends State<Xemluong> {
   int soGioTangCa = 0;
   int soLuongDvLam = 0;
   double tongHoaHong = 0.0;
-
+  int soNgayTrongThang = 0;
   @override
   void initState() {
     super.initState();
@@ -54,6 +54,7 @@ class _XemLuongState extends State<Xemluong> {
     setState(() {
       month = ngaybd.month;
       year = ngaybd.year;
+      soNgayTrongThang = helper.getSoNgayTrongThang(month, year);
     });
   }
 
@@ -92,7 +93,6 @@ class _XemLuongState extends State<Xemluong> {
   }
 
   int soNgayCongThem() {
-    int soNgayTrongThang = helper.getSoNgayTrongThang();
     if (soNgayTrongThang == 30) {
       return 2 - soNgayNGhiTinhLuong();
     } else if (soNgayTrongThang == 31) {
@@ -109,11 +109,10 @@ class _XemLuongState extends State<Xemluong> {
   }
 
   int soNgayCong() {
-    return helper.getSoNgayTrongThang() - soNgayNGhiKhongTinhLuong();
+    return soNgayTrongThang - soNgayNGhiKhongTinhLuong();
   }
 
   int soNgayNGhiTinhLuong() {
-    int soNgayTrongThang = helper.getSoNgayTrongThang();
     if (soNgayTrongThang == 30) {
       if (soNgayNghi < 2) {
         return soNgayNghi;

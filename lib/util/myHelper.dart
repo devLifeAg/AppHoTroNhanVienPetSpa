@@ -24,10 +24,7 @@ class Myhelper {
     return format.format(value);
   }
 
-  int getSoNgayTrongThang() {
-    DateTime now = DateTime.now();
-    int thang = now.month;
-    int nam = now.year;
+  int getSoNgayTrongThang(int thang, int nam) {
     if (thang < 1 || thang > 12) return -1; // Tháng không hợp lệ
 
     List<int> ngayTrongThang = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];

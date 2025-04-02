@@ -94,7 +94,7 @@ class _PhanTichTaiChinhState extends State<Phantichtaichinh> {
               centerTitle: true, // Căn giữa tiêu đề
               iconTheme: const IconThemeData(color: Colors.white),
               title: const Text(
-                "AI Phân Tích Tài Chính",
+                "AI Phân Tích Thu Nhập",
                 style: TextStyle(color: white, fontWeight: FontWeight.bold),
               ),
               flexibleSpace: Container(
