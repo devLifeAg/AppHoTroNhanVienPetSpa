@@ -137,11 +137,11 @@ class _XemLuongState extends State<Xemluong> {
   }
 
   double tienPhuCap() {
-    return (soNgayCong() - soNgayNGhiTinhLuong()) * 25000;
+    return (soNgayCong() - soNgayNGhiTinhLuong()) * 30000;
   }
 
   double tienTangCa() {
-    return soGioTangCa * 25000;
+    return soGioTangCa * 30000;
   }
 
   double luongDot1() {
