@@ -157,7 +157,7 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
       ),
       body: isLoading
           ? mywidget.Loading()
-          : Container(
+          : Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 10, 8),
               child: Column(
                 children: [
@@ -181,6 +181,8 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
                             controller:
                                 _scrollController, // Gán ScrollController
                             itemCount: _listHH.length,
+                            clipBehavior: Clip
+                                .none, // Cho phép các phần tử render vượt ra ngoài
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 child: ItemHoaHong(

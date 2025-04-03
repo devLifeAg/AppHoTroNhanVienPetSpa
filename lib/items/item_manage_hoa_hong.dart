@@ -82,17 +82,6 @@ class ItemHoaHong extends StatelessWidget {
                     style: TextStyle(color: Colors.white)),
                 Text("Làm lúc: ${helper.formatNgayGio(hh.ngaygio)}",
                     style: TextStyle(color: Colors.white)),
-                // Row(
-                //   children: [
-                //     SizedBox(
-                //       width: 140,
-                //       child:
-                //     ),
-                //     Expanded(
-                //       child:
-                //     )
-                //   ],
-                // ),
                 Row(
                   children: [
                     Expanded(

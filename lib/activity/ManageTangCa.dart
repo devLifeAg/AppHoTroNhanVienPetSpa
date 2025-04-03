@@ -307,6 +307,8 @@ class _QuanLyTangCaState extends State<Managetangca> {
                               child: ListView.builder(
                                 controller: _scrollController,
                                 itemCount: _listTC.length,
+                                clipBehavior: Clip
+                                .none, // Cho phép các phần tử render vượt ra ngoài
                                 itemBuilder: (context, index) {
                                   return GestureDetector(
                                     child: ItemTangCa(
