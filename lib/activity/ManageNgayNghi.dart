@@ -145,10 +145,10 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
 
   void xuLyThemNgayNghi() async {
     int kq;
-    if(ngayNghi == null){
+    if (ngayNghi == null) {
       helper.showToast("ngày nghỉ không được trống", false);
       return;
-    }else if (ngayNghi!.isAfter(DateTime.now())) {
+    } else if (ngayNghi!.isAfter(DateTime.now())) {
       helper.showToast("không được nghỉ trước tương lai", false);
       return;
     } else if (selectedIndex == -1) {
@@ -156,7 +156,7 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
     } else {
       kq = await capNhatNgayNghi();
     }
-    
+
     if (kq != -1) {
       setState(() {
         isLoading = true;
@@ -262,18 +262,19 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
                 Expanded(
                   child: _listNN.isNotEmpty
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 10, 8),
+                          padding: const EdgeInsets.all(8),
                           child: ListView.builder(
                             controller: _scrollController,
                             itemCount: _listNN.length,
-                            clipBehavior: Clip
-                                .none, // Cho phép các phần tử render vượt ra ngoài
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                child: ItemNgayNghi(
-                                  nn: _listNN[index],
-                                  index: index,
-                                  isSelected: selectedIndex == index,
+                                child: Container(
+                                  margin: const EdgeInsets.only(right: 4),
+                                  child: ItemNgayNghi(
+                                    nn: _listNN[index],
+                                    index: index,
+                                    isSelected: selectedIndex == index,
+                                  ),
                                 ),
                                 onTap: () {
                                   setState(() {
