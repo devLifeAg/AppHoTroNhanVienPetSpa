@@ -6,12 +6,17 @@ import 'package:app_ho_tro_nhan_vien_pet_spa/model/NhanVien.dart';
 class Bottomsheet extends StatefulWidget {
   final String tenContext; // Thêm cờ để kiểm tra
   final Nhanvien nv;
+  final DateTime? ngaybatdau;
+  final DateTime? ngayketthuc;
+
   final Function(DateTime, DateTime) onSearch; // Thêm callback
   const Bottomsheet(
       {super.key,
       required this.tenContext,
       required this.nv,
-      required this.onSearch});
+      required this.onSearch,
+      this.ngaybatdau,
+      this.ngayketthuc});
   @override
   _BottomsheetState createState() => _BottomsheetState();
 }
@@ -25,9 +30,9 @@ class _BottomsheetState extends State<Bottomsheet> {
   final List<String> months =
       List.generate(12, (index) => "Tháng ${index + 1}");
   final List<String> years = List.generate(
-    DateTime.now().year - 2020 + 1, // Số lượng phần tử
+    DateTime.now().year - 2024 + 1, // Số lượng phần tử
     (index) =>
-        (2020 + index).toString(), // Tạo danh sách từ 2020 đến năm hiện tại
+        (2024 + index).toString(), // Tạo danh sách từ 2020 đến năm hiện tại
   );
 
   DateTime? startDate;
@@ -37,6 +42,8 @@ class _BottomsheetState extends State<Bottomsheet> {
   void initState() {
     super.initState();
     selectedYear = years.length - 1; // Gán giá trị sau khi `years` đã khởi tạo
+    startDate = widget.ngaybatdau ?? DateTime.now();
+    endDate = widget.ngayketthuc ?? DateTime.now();
   }
 
   void callBackDate() {
@@ -134,9 +141,6 @@ class _BottomsheetState extends State<Bottomsheet> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedYear = 0;
-          startDate = null;
-          endDate = null;
           selectedButton = text; // Cập nhật trạng thái khi nhấn vào
         });
       },

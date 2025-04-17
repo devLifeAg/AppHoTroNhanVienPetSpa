@@ -31,6 +31,8 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
   Map<String, String> _listDVC = {};
   DateTime now = DateTime.now();
   String dateTo = "";
+  DateTime? ngayDau;
+  DateTime? ngayCuoi;
 
   @override
   void initState() {
@@ -58,6 +60,9 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
 
   Future<void> _loadTrangThongTinHoaHong(
       DateTime ngaybd, DateTime ngaykt) async {
+    ngayCuoi = DateTime(ngaykt.year, ngaykt.month, ngaykt.day,
+        DateTime.now().hour, DateTime.now().minute, DateTime.now().second);
+        ngayDau = ngaybd;
     String id = widget.nv.nv_id.toString();
     final data = await myController.fetchAllThongTinHoaHong(id, ngaybd, ngaykt);
     setState(() {
@@ -134,6 +139,8 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
                   return Bottomsheet(
                     tenContext: "QLHH",
                     nv: widget.nv,
+                    ngaybatdau: ngayDau,
+                    ngayketthuc: ngayCuoi,
                     onSearch: (startDate, endDate) {
                       // Nhận ngày tìm kiếm
                       dateTo =
@@ -186,11 +193,10 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
                                 child: Container(
                                   margin: const EdgeInsets.only(right: 4),
                                   child: ItemHoaHong(
-                                    hh: _listHH[index],
-                                    listdichvucon: _listDVC,
-                                    index: index),
+                                      hh: _listHH[index],
+                                      listdichvucon: _listDVC,
+                                      index: index),
                                 ),
-                                
                                 onTap: () async {
                                   final result = await Navigator.push(
                                     context,
@@ -268,6 +274,7 @@ class _QuanLyHoaHongState extends State<Managehoahong> {
                 hh: null,
                 tieude: "Thêm Thông Tin",
                 nv: widget.nv,
+                dt: ngayCuoi,
               ),
             ),
           );

@@ -33,6 +33,7 @@ class _QuanLyTangCaState extends State<Managetangca> {
   int month = 0;
   int year = 0;
   bool isLoading = true;
+  bool isAddEdit = false;
 
   @override
   void initState() {
@@ -67,6 +68,7 @@ class _QuanLyTangCaState extends State<Managetangca> {
       soGioController.text = "";
       ngayTangCa = null;
       isLoading = false;
+      isAddEdit = false;
     });
   }
 
@@ -146,7 +148,7 @@ class _QuanLyTangCaState extends State<Managetangca> {
     }
   }
 
-  void xuLyThemTangCa() async {
+  void xuLyThemSuaTangCa() async {
     int kq;
     if (ngayTangCa == null) {
       helper.showToast("không được bỏ trống ngày", false);
@@ -158,7 +160,12 @@ class _QuanLyTangCaState extends State<Managetangca> {
         int.parse(soGioController.text) == 0) {
       helper.showToast("giờ tăng ca không được trống hoặc bằng 0", false);
       return;
-    } else if (selectedIndex == -1) {
+    }
+    setState(() {
+      isAddEdit = true; // disable button
+    });
+
+    if (selectedIndex == -1) {
       kq = await themTangCa();
     } else {
       kq = await capNhatTangCa();
@@ -293,9 +300,7 @@ class _QuanLyTangCaState extends State<Managetangca> {
                                 elevation: 3, // Độ cao của shadow
                                 shadowColor: dark_purple,
                               ),
-                              onPressed: () {
-                                xuLyThemTangCa();
-                              },
+                              onPressed: isAddEdit ? null : xuLyThemSuaTangCa,
                               child: Text(selectedIndex == -1 ? "Thêm" : "Lưu"))
                         ],
                       ),

@@ -32,6 +32,7 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
   bool isLoading = true;
   int month = 0;
   int year = 0;
+  bool isAddEdit = false;
 
   @override
   void initState() {
@@ -68,6 +69,7 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
       ngayNghiId = -1;
       ngayNghi = null;
       isLoading = false;
+      isAddEdit = false;
     });
   }
 
@@ -143,7 +145,7 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
     }
   }
 
-  void xuLyThemNgayNghi() async {
+  void xuLyThemSuaNgayNghi() async {
     int kq;
     if (ngayNghi == null) {
       helper.showToast("ngày nghỉ không được trống", false);
@@ -151,7 +153,12 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
     } else if (ngayNghi!.isAfter(DateTime.now())) {
       helper.showToast("không được nghỉ trước tương lai", false);
       return;
-    } else if (selectedIndex == -1) {
+    }
+    setState(() {
+      isAddEdit = true; // disable button
+    });
+
+    if (selectedIndex == -1) {
       kq = await themNgayNghi();
     } else {
       kq = await capNhatNgayNghi();
@@ -252,9 +259,7 @@ class _QuanLyNgayNghiState extends State<Managengaynghi> {
                             elevation: 3, // Độ cao của shadow
                             shadowColor: dark_purple,
                           ),
-                          onPressed: () {
-                            xuLyThemNgayNghi();
-                          },
+                          onPressed: isAddEdit ? null : xuLyThemSuaNgayNghi,
                           child: Text(selectedIndex == -1 ? "Thêm" : "Lưu"))
                     ],
                   ),

@@ -14,9 +14,10 @@ class Addedithoahong extends StatefulWidget {
   final Nhanvien nv;
   final Thongtinhoahong? hh;
   final String tieude;
+  final DateTime? dt;
 
   const Addedithoahong(
-      {super.key, required this.hh, required this.tieude, required this.nv});
+      {super.key, this.hh, required this.tieude, required this.nv, this.dt});
 
   @override
   State<StatefulWidget> createState() => _addEditHoaHongState();
@@ -31,9 +32,9 @@ class _addEditHoaHongState extends State<Addedithoahong> {
   bool selectedPet = true; // Mặc định chọn "Chó"
   int idSelectedService = -1;
   int idSelectedDVC = -1;
-  DateTime selectedDateTime = DateTime.now();
+  DateTime? selectedDateTime;
   double hoahong = 0.0;
-
+  bool isAddEdit = false;
   List<Dichvu> _listDV = [];
   List<Dichvucon> _listDVCon = [];
 
@@ -49,6 +50,7 @@ class _addEditHoaHongState extends State<Addedithoahong> {
     await _loadDichVuChaCon(); // Đợi danh sách được tải xong
     _loadHoaHong(); // Gọi sau khi dữ liệu đã sẵn sàng
     setState(() {
+      selectedDateTime = widget.dt ?? DateTime.now();
       isLoading = false; // Dữ liệu đã tải xong
     });
   }
@@ -84,7 +86,7 @@ class _addEditHoaHongState extends State<Addedithoahong> {
           "tt_total": double.parse(
               helper.removeFormatCurrency(tongTienController.text)),
           "dvc_id": idSelectedDVC,
-          "ngaygio": helper.formatToSaveDateTime(selectedDateTime, true),
+          "ngaygio": helper.formatToSaveDateTime(selectedDateTime!, true),
           "hoa_hong": hoahong,
           "nv_id": widget.nv.nv_id
         }),
@@ -117,7 +119,7 @@ class _addEditHoaHongState extends State<Addedithoahong> {
           "tt_total": double.parse(
               helper.removeFormatCurrency(tongTienController.text)),
           "dvc_id": idSelectedDVC,
-          "ngaygio": helper.formatToSaveDateTime(selectedDateTime, true),
+          "ngaygio": helper.formatToSaveDateTime(selectedDateTime!, true),
           "hoa_hong": hoahong,
         }),
       );
@@ -190,7 +192,7 @@ class _addEditHoaHongState extends State<Addedithoahong> {
       TimeOfDay? pickedTime = await showTimePicker(
         context: context,
         initialTime:
-            TimeOfDay.fromDateTime(selectedDateTime), // Mặc định giờ hiện tại
+            TimeOfDay.fromDateTime(selectedDateTime!), // Mặc định giờ hiện tại
       );
 
       if (pickedTime != null) {
@@ -253,11 +255,40 @@ class _addEditHoaHongState extends State<Addedithoahong> {
     } else if (idSelectedDVC == -1) {
       helper.showToast("chưa chọn dịch vụ làm", false);
       return false;
-    } else if (selectedDateTime.isAfter(DateTime.now())) {
+    } else if (selectedDateTime!.isAfter(DateTime.now())) {
       helper.showToast("bạn không được đi trước tương lai", false);
       return false;
     }
     return true;
+  }
+
+  Future<void> xuLyThemSua() async {
+    if (!validateInput()) {
+      return;
+    }
+
+    setState(() {
+      isAddEdit = true;
+    });
+
+    int id;
+    if (widget.hh == null) {
+      id = await themThongTinHoaHong();
+    } else {
+      id = await suaThongTinHoaHong();
+    }
+
+    setState(() {
+      isAddEdit = false;
+    });
+
+    if (id != -1) {
+      Navigator.pop(context, {
+        "Id": id,
+        "startDate": selectedDateTime,
+        "endDate": selectedDateTime,
+      });
+    }
   }
 
   @override
@@ -507,7 +538,7 @@ class _addEditHoaHongState extends State<Addedithoahong> {
                             suffixIcon: Icon(Icons.calendar_month),
                           ),
                           controller: TextEditingController(
-                            text: helper.formatDateTime(selectedDateTime),
+                            text: helper.formatDateTime(selectedDateTime!),
                           ),
                           onTap: () => _selectDateTime(context),
                         ),
@@ -554,24 +585,11 @@ class _addEditHoaHongState extends State<Addedithoahong> {
                                 backgroundColor: Colors.green,
                                 foregroundColor: white,
                               ),
-                              onPressed: () async {
-                                if (!validateInput()) {
-                                  return;
-                                }
-                                int id;
-                                if (widget.hh == null) {
-                                  id = await themThongTinHoaHong();
-                                } else {
-                                  id = await suaThongTinHoaHong();
-                                }
-                                if (id != -1) {
-                                  Navigator.pop(context, {
-                                    "Id": id,
-                                    "startDate": selectedDateTime,
-                                    "endDate": selectedDateTime,
-                                  });
-                                }
-                              },
+                              onPressed: isAddEdit
+                                  ? null
+                                  : () async {
+                                      xuLyThemSua();
+                                    },
                               child: const Text("Lưu"))
                         ],
                       )
