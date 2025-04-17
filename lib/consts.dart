@@ -18,9 +18,10 @@ const String iconDog = "assets/icons/dog.png";
 const String iconCat = "assets/icons/cat.png";
 
 //url
-// const String myUrl = "https://hotronhanvienpetspaapi-production.up.railway.app/HoTroNhanVienPetSpaApi/"; //host
-const String myUrl = "http://hotronhanvienpetspaapi.whf.bz/HoTroNhanVienPetSpaApi/"; //host
-// const String myUrl = "http://10.0.2.2:8000/HoTroNhanVienPetSpaApi/";
+// const String myUrl = "https://hotronhanvienpetspaapi-production.up.railway.app/HoTroNhanVienPetSpaApi/"; //railway
+// const String myUrl = "http://hotronhanvienpetspaapi.whf.bz/HoTroNhanVienPetSpaApi/"; //googiehost
+// const String myUrl = "http://10.0.2.2:8000/HoTroNhanVienPetSpaApi/"; localhost
+const String myUrl = "https://hotronhanvienpetspaapi.onrender.com/HoTroNhanVienPetSpaApi/"; //render
 
 //time
 const String startTime = "00:00";
